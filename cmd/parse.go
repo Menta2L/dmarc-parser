@@ -22,7 +22,9 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/menta2l/dmarc-parser/internal/dmarc"
+	ilog "github.com/menta2l/dmarc-parser/internal/log"
 	"github.com/menta2l/dmarc-parser/internal/types"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -66,6 +68,7 @@ to quickly create a Cobra application.`,
 		} else {
 			db.LogMode(false)
 		}
+		db.SetLogger(&ilog.GormLogger{})
 		defer db.Close()
 		db.AutoMigrate(&types.DmarcReport{}, &types.DmarcPOReason{}, types.DmarcSPFAuthResult{}, types.DmarcDKIMAuthResult{}, types.DmarcRecord{})
 		db.Model(&types.DmarcPOReason{}).AddForeignKey("record_id", "dmarc_records(id)", "CASCADE", "CASCADE")

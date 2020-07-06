@@ -10,6 +10,7 @@ require (
 	github.com/jinzhu/gorm v1.9.14
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/gox v1.0.1 // indirect
+	github.com/sirupsen/logrus v1.2.0
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.7.0
 	github.com/subchen/go-log v3.0.0+incompatible
