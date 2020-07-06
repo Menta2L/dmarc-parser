@@ -13,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/gobs/pretty"
+	"github.com/jedisct1/dlog"
 	"github.com/jinzhu/gorm"
 	"github.com/menta2l/dmarc-parser/internal/archive"
 	"github.com/menta2l/dmarc-parser/internal/types"
@@ -57,7 +59,9 @@ func Parse(input string, db *gorm.DB) error {
 	fb.DateRangeEnd = int64(timestamp2)
 
 	fb.MessageId = msg.Header.Get("Message-Id")
+	dlog.Info(pretty.PrettyFormat(fb))
 	if err = db.Create(&fb).Error; err != nil {
+		dlog.Info(pretty.PrettyFormat(err))
 		return err
 	}
 	//	chanARR, wg := ParseDmarcARRParallel(50, 4, *fb)
